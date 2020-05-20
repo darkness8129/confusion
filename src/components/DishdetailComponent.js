@@ -47,14 +47,15 @@ const RenderComments = ({ comments }) => {
 
 const DishDetail = ({ selectedDish }) => {
     return (
-        <div className="row">
-            <div className="col-12 col-md-5 mt-1">
-                <RenderDish dish={selectedDish} />
+        <div className="container">
+            <div className="row">
+                <div className="col-12 col-md-5 mt-1">
+                    <RenderDish dish={selectedDish} />
+                </div>
+                <div className="col-12 col-md-5 mt-1">
+                    {selectedDish != null ? <RenderComments comments={selectedDish.comments} /> : <RenderComments comments={null} />}
+                </div>
             </div>
-            <div className="col-12 col-md-5 mt-1">
-                {selectedDish != null ? <RenderComments comments={selectedDish.comments} /> : <RenderComments comments={null} />}
-            </div>
-
         </div>
     );
 }
