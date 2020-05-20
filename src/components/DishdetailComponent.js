@@ -55,15 +55,16 @@ export default class DishDetail extends Component {
     }
 
     render() {
-        return (<div className="row">
-            <div className="col-12 col-md-5 mt-1">
-                {this.renderDish(this.props.selectedDish)}
-            </div>
-            <div className="col-12 col-md-5 mt-1">
-                {this.props.selectedDish != null ? this.renderComments(this.props.selectedDish.comments) : this.renderComments(null)}
-            </div>
+        return (
+            <div className="row">
+                <div className="col-12 col-md-5 mt-1">
+                    {this.renderDish(this.props.selectedDish)}
+                </div>
+                <div className="col-12 col-md-5 mt-1">
+                    {this.props.selectedDish != null ? this.renderComments(this.props.selectedDish.comments) : this.renderComments(null)}
+                </div>
 
-        </div>);
+            </div>
+        );
     }
-
 }
