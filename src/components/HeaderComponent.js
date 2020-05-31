@@ -26,7 +26,7 @@ export default class Header extends Component {
 
     handleLogin(e) {
         this.toggleModal();
-        alert(`Username: ${this.username.value} Password: ${this.password.value} Remember: ${this.remember.checked}`);   
+        alert(`Username: ${this.username.value} Password: ${this.password.value} Remember: ${this.remember.checked}`);
         e.preventDefault();
     }
 
