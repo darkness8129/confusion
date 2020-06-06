@@ -16,7 +16,7 @@ const RenderDish = ({ dish }) => {
 
 }
 
-const RenderComments = ({ comments }) => {
+const RenderComments = ({ comments, addComment, dishId }) => {
     return (
         <div>
             <h4>Comments</h4>
@@ -32,7 +32,7 @@ const RenderComments = ({ comments }) => {
                     })
                 }
             </ul>
-            <CommentForm />
+            <CommentForm addComment={addComment} dishId={dishId} />
         </div>
     );
 }
@@ -57,8 +57,8 @@ class CommentForm extends Component {
     }
 
     handleSubmit(values) {
-        alert('Current State is: ' + JSON.stringify(values));
-        console.log('Current State is: ' + JSON.stringify(values));
+        this.toggleCommentForm();
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
     }
 
     render() {
@@ -122,7 +122,7 @@ class CommentForm extends Component {
 
 }
 
-const DishDetail = ({ selectedDish, comments }) => {
+const DishDetail = ({ selectedDish, comments, addComment }) => {
     return (
         <div className="container">
             <div className="row">
@@ -140,7 +140,7 @@ const DishDetail = ({ selectedDish, comments }) => {
                     <RenderDish dish={selectedDish} />
                 </div>
                 <div className="col-12 col-md-5 mt-1">
-                    <RenderComments comments={comments} />
+                    <RenderComments comments={comments} addComment={addComment} dishId={selectedDish.id} />
                 </div>
             </div>
         </div>

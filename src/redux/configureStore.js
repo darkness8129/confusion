@@ -12,4 +12,4 @@ export const configureStore = () => {
         promotions: Promotions
     }));
     return store;
-}
+} 
