@@ -18,7 +18,7 @@ const RenderDish = ({ dish }) => {
 
 }
 
-const RenderComments = ({ comments, addComment, dishId }) => {
+const RenderComments = ({ comments, postComment, dishId }) => {
     return (
         <div>
             <h4>Comments</h4>
@@ -34,7 +34,7 @@ const RenderComments = ({ comments, addComment, dishId }) => {
                     })
                 }
             </ul>
-            <CommentForm addComment={addComment} dishId={dishId} />
+            <CommentForm postComment={postComment} dishId={dishId} />
         </div>
     );
 }
@@ -60,7 +60,7 @@ class CommentForm extends Component {
 
     handleSubmit(values) {
         this.toggleCommentForm();
-        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+        this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
     }
 
     render() {
@@ -124,7 +124,7 @@ class CommentForm extends Component {
 
 }
 
-const DishDetail = ({ selectedDish, comments, addComment, isLoading, errMessage }) => {
+const DishDetail = ({ selectedDish, comments, postComment, isLoading, errMessage }) => {
     if (isLoading) {
         return (
             <div className="container">
@@ -159,7 +159,7 @@ const DishDetail = ({ selectedDish, comments, addComment, isLoading, errMessage 
                         <RenderDish dish={selectedDish} />
                     </div>
                     <div className="col-12 col-md-5 mt-1">
-                        <RenderComments comments={comments} addComment={addComment} dishId={selectedDish.id} />
+                        <RenderComments comments={comments} postComment={postComment} dishId={selectedDish.id} />
                     </div>
                 </div>
             </div>

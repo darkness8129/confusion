@@ -9,7 +9,7 @@ import Menu from './MenuComponent';
 import DishDetail from './DishdetailComponent';
 import Contact from './ContactComponent';
 import Footer from './FooterComponent';
-import { addComment, fetchDishes, fetchPromotions, fetchComments } from '../redux/ActionCreators';
+import { postComment, fetchDishes, fetchPromotions, fetchComments } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
     return {
@@ -22,7 +22,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return ({
-        addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
+        postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
         fetchDishes: () => dispatch(fetchDishes()),
         fetchPromotions: () => dispatch(fetchPromotions()),
         fetchComments: () => dispatch(fetchComments()),
@@ -61,7 +61,7 @@ class Main extends Component {
                     errMessage={this.props.dishes.errMessage}
                     comments={this.props.comments.comments.filter(comment => comment.dishId === parseInt(match.params.dishId, 10))}
                     commentsFailed={this.props.comments.errMessage}
-                    addComment={this.props.addComment} />
+                    postComment={this.props.postComment} />
             );
         }
 
