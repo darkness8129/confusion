@@ -156,7 +156,7 @@ export const postComment = (dishId, rating, author, comment) => (dispatch) => {
                 throw new Error(error.message);
             })
         .then(response => response.json())
-        .then(response => dispatch(addComment(response)))
+        .then(comment => dispatch(addComment(comment)))
         .catch(error => alert(`Error: ${error.message}`));
 }
 
@@ -164,3 +164,27 @@ export const addComment = (comment) => ({
     type: ActionTypes.ADD_COMMENT,
     payload: comment
 });
+
+export const postFeedback = (feedback) => () => {
+    return fetch(baseUrl + 'feedback', {
+        method: "POST",
+        body: JSON.stringify(feedback),
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "same-origin"
+    })
+        .then(response => {
+            if (response.ok) {
+                return response;
+            } else {
+                throw new Error(`Error ${response.status}: ${response.statusText}`);
+            }
+        },
+            error => {
+                throw new Error(error.message);
+            })
+        .then(response => response.json())
+        .then(feedback => alert(`Thank you for your feedback! ${JSON.stringify(feedback)}`))
+        .catch(error => alert(`Error: ${error.message}`));
+}
