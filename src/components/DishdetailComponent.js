@@ -2,18 +2,23 @@ import React, { Component } from 'react';
 import { Card, CardBody, CardImg, CardTitle, CardText, Breadcrumb, BreadcrumbItem, Button, Modal, ModalBody, ModalHeader, Label } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { LocalForm, Control, Errors } from 'react-redux-form';
+import { FadeTransform, Stagger, Fade } from 'react-animation-components';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 
 const RenderDish = ({ dish }) => {
     return (
-        <Card>
-            <CardImg top src={baseUrl + dish.image} alt={dish.name} />
-            <CardBody>
-                <CardTitle>{dish.name}</CardTitle>
-                <CardText>{dish.description}</CardText>
-            </CardBody>
-        </Card>
+        <FadeTransform in transformProps={{
+            exitTransform: 'scale(0.5) translateY(-50%)'
+        }}>
+            <Card>
+                <CardImg top src={baseUrl + dish.image} alt={dish.name} />
+                <CardBody>
+                    <CardTitle>{dish.name}</CardTitle>
+                    <CardText>{dish.description}</CardText>
+                </CardBody>
+            </Card>
+        </FadeTransform>
     );
 
 }
@@ -23,16 +28,20 @@ const RenderComments = ({ comments, postComment, dishId }) => {
         <div>
             <h4>Comments</h4>
             <ul className="list-unstyled">
-                {
-                    comments.map(elem => {
-                        return (
-                            <li key={elem.id}>
-                                <p>{elem.comment}</p>
-                                <p>-- {elem.author}, {new Date(elem.date).toDateString()}</p>
-                            </li>
-                        );
-                    })
-                }
+                <Stagger in>
+                    {
+                        comments.map(elem => {
+                            return (
+                                <Fade in>
+                                    <li key={elem.id}>
+                                        <p>{elem.comment}</p>
+                                        <p>-- {elem.author}, {new Date(elem.date).toDateString()}</p>
+                                    </li>
+                                </Fade>
+                            );
+                        })
+                    }
+                </Stagger>
             </ul>
             <CommentForm postComment={postComment} dishId={dishId} />
         </div>
