@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardImg, CardTitle, CardImgOverlay, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 
@@ -15,6 +16,10 @@ const RenderMenuItem = ({ dish }) => {
             </Link>
         </Card>
     );
+}
+
+RenderMenuItem.propTypes = {
+    dish: PropTypes.object
 }
 
 const Menu = ({ dishes }) => {
@@ -61,6 +66,10 @@ const Menu = ({ dishes }) => {
             </div>
         );
     }
+}
+
+Menu.propTypes = {
+    dishes: PropTypes.object
 }
 
 export default Menu;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText } from 'reactstrap';
 import { FadeTransform } from 'react-animation-components';
+import PropTypes from 'prop-types';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 
@@ -31,6 +32,12 @@ const RenderCard = ({ item, isLoading, errMessage }) => {
     }
 }
 
+RenderCard.propTypes = {
+    item: PropTypes.object,
+    isLoading: PropTypes.bool,
+    errMesage: PropTypes.string
+}
+
 const Home = ({ dish, dishesLoading, dishesFailed, promotion, promotionsLoading, promotionsFailed, leader, leadersLoading, leadersFailed, }) => {
     return (
         <div className="container">
@@ -47,6 +54,18 @@ const Home = ({ dish, dishesLoading, dishesFailed, promotion, promotionsLoading,
             </div>
         </div>
     );
+}
+
+Home.propTypes = {
+    dish: PropTypes.object,
+    dishesLoading: PropTypes.bool,
+    dishesFailed: PropTypes.string,
+    promotion: PropTypes.object,
+    promotionsLoading: PropTypes.bool,
+    promotionsFailed: PropTypes.string,
+    leader: PropTypes.object,
+    leadersLoading: PropTypes.bool,
+    leadersFailed: PropTypes.string
 }
 
 export default Home;

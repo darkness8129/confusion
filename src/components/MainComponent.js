@@ -3,6 +3,7 @@ import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { actions } from 'react-redux-form';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import PropTypes from 'prop-types';
 import Home from './HomeComponent';
 import About from './AboutComponent';
 import Header from './HeaderComponent';
@@ -89,6 +90,17 @@ class Main extends Component {
             </>
         );
     }
+}
+
+Main.propTypes = {
+    dishes: PropTypes.object,
+    comments: PropTypes.object,
+    leaders: PropTypes.object,
+    promotions: PropTypes.object,
+    fetchDishes: PropTypes.func,
+    fetchPromotions: PropTypes.func,
+    fetchLeaders: PropTypes.func,
+    fetchComments: PropTypes.func
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

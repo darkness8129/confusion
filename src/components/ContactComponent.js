@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem, Button, Label, Col, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Form, Control, Errors } from 'react-redux-form';
+import PropTypes from 'prop-types';
 
 const required = (value) => value && value.length;
 const maxLength = (len) => (value) => !value || value.length <= len;
@@ -206,4 +207,9 @@ export default class Contact extends Component {
             </div >
         );
     }
+}
+
+Contact.propTypes = {
+    postFeedback: PropTypes.func,
+    resetFeedbackForm: PropTypes.func
 }

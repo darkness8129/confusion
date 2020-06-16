@@ -3,6 +3,7 @@ import { Card, CardBody, CardImg, CardTitle, CardText, Breadcrumb, BreadcrumbIte
 import { Link } from 'react-router-dom';
 import { LocalForm, Control, Errors } from 'react-redux-form';
 import { FadeTransform, Stagger, Fade } from 'react-animation-components';
+import PropTypes from 'prop-types';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 
@@ -23,6 +24,10 @@ const RenderDish = ({ dish }) => {
 
 }
 
+RenderDish.propTypes = {
+    dish: PropTypes.object
+}
+
 const RenderComments = ({ comments, postComment, dishId }) => {
     return (
         <div>
@@ -32,8 +37,8 @@ const RenderComments = ({ comments, postComment, dishId }) => {
                     {
                         comments.map(elem => {
                             return (
-                                <Fade in>
-                                    <li key={elem.id}>
+                                <Fade in key={elem.id}>
+                                    <li>
                                         <p>{elem.comment}</p>
                                         <p>-- {elem.author}, {new Date(elem.date).toDateString()}</p>
                                     </li>
@@ -46,6 +51,12 @@ const RenderComments = ({ comments, postComment, dishId }) => {
             <CommentForm postComment={postComment} dishId={dishId} />
         </div>
     );
+}
+
+RenderComments.propTypes = {
+    comments: PropTypes.array,
+    postComment: PropTypes.func,
+    dishId: PropTypes.number
 }
 
 const maxLength = (len) => (value) => !value || value.length <= len;
@@ -133,6 +144,11 @@ class CommentForm extends Component {
 
 }
 
+CommentForm.propTypes = {
+    postComment: PropTypes.func,
+    dishId: PropTypes.number
+}
+
 const DishDetail = ({ selectedDish, comments, postComment, isLoading, errMessage }) => {
     if (isLoading) {
         return (
@@ -174,6 +190,14 @@ const DishDetail = ({ selectedDish, comments, postComment, isLoading, errMessage
             </div>
         );
     }
+}
+
+DishDetail.propTypes = {
+    selectedDish: PropTypes.object,
+    comments: PropTypes.array,
+    postComment: PropTypes.func,
+    isLoading: PropTypes.bool,
+    errMessage: PropTypes.string
 }
 
 export default DishDetail;

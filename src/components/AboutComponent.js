@@ -2,6 +2,7 @@ import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Stagger, Fade } from 'react-animation-components';
+import PropTypes from 'prop-types';
 import { baseUrl } from '../shared/baseUrl';
 import { Loading } from './LoadingComponent';
 const RenderLeader = ({ leader }) => {
@@ -19,6 +20,10 @@ const RenderLeader = ({ leader }) => {
     );
 }
 
+RenderLeader.propTypes = {
+    leader: PropTypes.object
+}
+
 const About = ({ leaders }) => {
     let leadersBlock;
 
@@ -31,8 +36,8 @@ const About = ({ leaders }) => {
             <Stagger in>
                 {leaders.leaders.map(leader => {
                     return (
-                        <Fade in>
-                            <RenderLeader key={leader.id} leader={leader} />
+                        <Fade in key={leader.id}>
+                            <RenderLeader leader={leader} />
                         </Fade>
                     );
                 })}
@@ -100,6 +105,10 @@ const About = ({ leaders }) => {
             </div>
         </div>
     );
+}
+
+About.propTypes = {
+    leaders: PropTypes.object
 }
 
 export default About;    
