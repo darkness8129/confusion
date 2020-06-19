@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: DishdetailComponent.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: DishdetailComponent.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module DetailsAboutSelecetedDish
+ */
+import React, { Component } from 'react';
+import { Card, CardBody, CardImg, CardTitle, CardText, Breadcrumb, BreadcrumbItem, Button, Modal, ModalBody, ModalHeader, Label } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { LocalForm, Control, Errors } from 'react-redux-form';
+import { FadeTransform, Stagger, Fade } from 'react-animation-components';
+import PropTypes from 'prop-types';
+import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
+
+/**
+ * Component for rendering dish.
+ * @param {object} dish Containing information about dish.
+ */
+const RenderDish = ({ dish }) => {
+    return (
+        &lt;FadeTransform in transformProps={{
+            exitTransform: 'scale(0.5) translateY(-50%)'
+        }}>
+            &lt;Card>
+                &lt;CardImg top src={baseUrl + dish.image} alt={dish.name} />
+                &lt;CardBody>
+                    &lt;CardTitle>{dish.name}&lt;/CardTitle>
+                    &lt;CardText>{dish.description}&lt;/CardText>
+                &lt;/CardBody>
+            &lt;/Card>
+        &lt;/FadeTransform>
+    );
+
+}
+
+RenderDish.propTypes = {
+    dish: PropTypes.object
+}
+
+/**
+ * Component for rendering comments.
+ * @param {array} comments Containing array of comments.
+ * @param {function} postComment Posting comment to the server.
+ * @param {number} dishId Id of selected dish.
+ */
+const RenderComments = ({ comments, postComment, dishId }) => {
+    return (
+        &lt;div>
+            &lt;h4>Comments&lt;/h4>
+            &lt;ul className="list-unstyled">
+                &lt;Stagger in>
+                    {
+                        comments.map(elem => {
+                            return (
+                                &lt;Fade in key={elem.id}>
+                                    &lt;li>
+                                        &lt;p>{elem.comment}&lt;/p>
+                                        &lt;p>-- {elem.author}, {new Date(elem.date).toDateString()}&lt;/p>
+                                    &lt;/li>
+                                &lt;/Fade>
+                            );
+                        })
+                    }
+                &lt;/Stagger>
+            &lt;/ul>
+            &lt;CommentForm postComment={postComment} dishId={dishId} />
+        &lt;/div>
+    );
+}
+
+RenderComments.propTypes = {
+    comments: PropTypes.array,
+    postComment: PropTypes.func,
+    dishId: PropTypes.number
+}
+
+/**
+ * Function for validate for comment form. Sets the max length of the str.
+ * @param {number} len Max length. 
+ */
+const maxLength = (len) => (value) => !value || value.length &lt;= len;
+
+/**
+ * Function for validate for comment form. Sets the min length of the str.
+ * @param {number} len Min length. 
+ */
+const minLength = (len) => (value) => value &amp;&amp; value.length >= len;
+
+/**
+ * Component for showing comments form.
+ * @param {function} postComment Posting comment to the server.
+ * @param {number} dishId Id of selected dish.
+ */
+class CommentForm extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isCommentFormOpen: false
+        }
+
+        this.toggleCommentForm = this.toggleCommentForm.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    /**
+     * Function thar open and close comment form.
+     */
+    toggleCommentForm() {
+        this.setState({ isCommentFormOpen: !this.state.isCommentFormOpen })
+    }
+
+    /**
+     * Function for submitting comment.
+     * @param {values} values Containing comment entered by the user in the form.
+     */
+    handleSubmit(values) {
+        this.toggleCommentForm();
+        this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
+    }
+
+    render() {
+        return (
+            &lt;>
+                &lt;Button outline onClick={this.toggleCommentForm}>&lt;span className="fa fa-pencil fa-lg">&lt;/span>Submit comment&lt;/Button>
+                &lt;Modal isOpen={this.state.isCommentFormOpen}>
+                    &lt;ModalHeader toggle={this.toggleCommentForm}>Submit Comment&lt;/ModalHeader>
+                    &lt;ModalBody>
+                        &lt;LocalForm onSubmit={(values => this.handleSubmit(values))}>
+                            &lt;div className="form-group">
+                                &lt;Label htmlFor="rating">Rating&lt;/Label>
+                                &lt;Control.select model=".rating"
+                                    id="rating"
+                                    name="rating"
+                                    className="form-control" >
+                                    &lt;option>1&lt;/option>
+                                    &lt;option>2&lt;/option>
+                                    &lt;option>3&lt;/option>
+                                    &lt;option>4&lt;/option>
+                                    &lt;option>5&lt;/option>
+                                &lt;/Control.select>
+                            &lt;/div>
+                            &lt;div className="form-group">
+                                &lt;Label htmlFor="author">Your Name&lt;/Label>
+                                &lt;Control.text model=".author"
+                                    id="author"
+                                    name="author"
+                                    placeholder="Your Name"
+                                    className="form-control"
+                                    validators={{
+                                        minLength: minLength(3),
+                                        maxLength: maxLength(15)
+                                    }}
+                                />
+                                &lt;Errors
+                                    className="text-danger"
+                                    model=".author"
+                                    show="touched"
+                                    messages={{
+                                        minLength: 'Must be greater than 2 characters ',
+                                        maxLength: 'Must be 15 characters or less '
+                                    }}
+                                />
+                            &lt;/div>
+                            &lt;div className="form-group">
+                                &lt;Label htmlFor="comment">Comment&lt;/Label>
+                                &lt;Control.textarea model=".comment"
+                                    id="comment"
+                                    name="comment"
+                                    rows="6"
+                                    className="form-control" />
+                            &lt;/div>
+                            &lt;Button type="submit" value="submit" color="primary">Submit&lt;/Button>
+                        &lt;/LocalForm>
+                    &lt;/ModalBody>
+                &lt;/Modal>
+            &lt;/>
+        );
+    }
+
+}
+
+CommentForm.propTypes = {
+    postComment: PropTypes.func,
+    dishId: PropTypes.number
+}
+
+/**
+ * Component for showing details of selected dish.
+ * @param {object} selectedDish Containing information about selected dish.
+ * @param {array} comments Array of comments.
+ * @param {function} postComment Posting comments to the server.
+ * @param {boolean} isLoading Information about loading selected dish.
+ * @param {string} errMessage Containing error message if error occuring.
+ */
+const DishDetail = ({ selectedDish, comments, postComment, isLoading, errMessage }) => {
+    if (isLoading) {
+        return (
+            &lt;div className="container">
+                &lt;div className="row">
+                    &lt;Loading />
+                &lt;/div>
+            &lt;/div>
+        );
+    } else if (errMessage) {
+        return (
+            &lt;div className="container">
+                &lt;div className="row">
+                    &lt;h4>{errMessage}&lt;/h4>
+                &lt;/div>
+            &lt;/div>
+        );
+    } else if (selectedDish != null) {
+        return (
+            &lt;div className="container">
+                &lt;div className="row">
+                    &lt;Breadcrumb>
+                        &lt;BreadcrumbItem>&lt;Link to='/menu'>Menu&lt;/Link>&lt;/BreadcrumbItem>
+                        &lt;BreadcrumbItem active>{selectedDish.name}&lt;/BreadcrumbItem>
+                    &lt;/Breadcrumb>
+                    &lt;div className="col-12">
+                        &lt;h3>{selectedDish.name}&lt;/h3>
+                        &lt;hr />
+                    &lt;/div>
+                &lt;/div>
+                &lt;div className="row">
+                    &lt;div className="col-12 col-md-5 mt-1">
+                        &lt;RenderDish dish={selectedDish} />
+                    &lt;/div>
+                    &lt;div className="col-12 col-md-5 mt-1">
+                        &lt;RenderComments comments={comments} postComment={postComment} dishId={selectedDish.id} />
+                    &lt;/div>
+                &lt;/div>
+            &lt;/div>
+        );
+    }
+}
+
+DishDetail.propTypes = {
+    selectedDish: PropTypes.object,
+    comments: PropTypes.array,
+    postComment: PropTypes.func,
+    isLoading: PropTypes.bool,
+    errMessage: PropTypes.string
+}
+
+export default DishDetail;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutUs.html">AboutUs</a></li><li><a href="module-ContactUs.html">ContactUs</a></li><li><a href="module-DetailsAboutSelecetedDish.html">DetailsAboutSelecetedDish</a></li><li><a href="module-Footer.html">Footer</a></li><li><a href="module-Header.html">Header</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-Loading.html">Loading</a></li><li><a href="module-Main.html">Main</a></li><li><a href="module-Menu.html">Menu</a></li></ul><h3>Classes</h3><ul><li><a href="module-ContactUs-Contact.html">Contact</a></li><li><a href="module-DetailsAboutSelecetedDish-CommentForm.html">CommentForm</a></li><li><a href="module-Header.html">Header</a></li><li><a href="module-Main-Main.html">Main</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Fri Jun 19 2020 15:59:47 GMT+0300 (GMT+03:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

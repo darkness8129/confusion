@@ -1,22 +1,58 @@
+/**
+ * @module ContactUs
+ */
 import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem, Button, Label, Col, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Form, Control, Errors } from 'react-redux-form';
 import PropTypes from 'prop-types';
 
+/**
+ * Function for validate for feedback form. Sets the input a s required.
+ * @param {*} value Value of input. 
+ */
 const required = (value) => value && value.length;
+
+/**
+ * Function for validate for feedback form. Sets the max length of the str.
+ * @param {number} len Max length. 
+ */
 const maxLength = (len) => (value) => !value || value.length <= len;
+
+/**
+ * Function for validate for feedback form. Sets the min length of the str.
+ * @param {number} len Min length. 
+ */
 const minLength = (len) => (value) => value && value.length >= len;
+
+/**
+ * Function for validate for feedback form. Сhecks if the value is a number.
+ * @param {*} value Value of input. 
+ */
 const isNumber = (value) => !isNaN(Number(value));
+
+/**
+ * Function for validate for feedback form. Сhecks the correctness of the email.
+ * @param {*} value Value of input.
+ */
 const validEmail = (value) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value);
 
-export default class Contact extends Component {
+/**
+ * Component for showing contact page.
+ * @param {function} postFeedback Sending feedback to the server.
+ * @param {function} resetFeedbackForm Clear the form when the feedback is sent.
+ */
+class Contact extends Component {
     constructor(props) {
         super(props);
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    /**
+     * Function for submitting feedback.
+     * @param {object} values Containing feedback entered by the user in the form.
+     */
     handleSubmit(values) {
         this.props.postFeedback(values);
         this.props.resetFeedbackForm();
@@ -213,3 +249,5 @@ Contact.propTypes = {
     postFeedback: PropTypes.func,
     resetFeedbackForm: PropTypes.func
 }
+
+export default Contact;

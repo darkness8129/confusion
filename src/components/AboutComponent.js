@@ -1,3 +1,6 @@
+/**
+ * @module AboutUs
+ */
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
@@ -5,6 +8,11 @@ import { Stagger, Fade } from 'react-animation-components';
 import PropTypes from 'prop-types';
 import { baseUrl } from '../shared/baseUrl';
 import { Loading } from './LoadingComponent';
+
+/**
+ * Component for rendering list of leaders on about page.
+ * @param {object} leader Containing information about the leader.
+ */
 const RenderLeader = ({ leader }) => {
     return (
         <Media tag="li">
@@ -24,6 +32,10 @@ RenderLeader.propTypes = {
     leader: PropTypes.object
 }
 
+/**
+ * Component for showing about page.
+ * @param {object} leaders Containing array of leaders and information about errors and loading.
+ */
 const About = ({ leaders }) => {
     let leadersBlock;
 

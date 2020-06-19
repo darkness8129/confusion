@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: ContactComponent.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: ContactComponent.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module ContactUs
+ */
+import React, { Component } from 'react';
+import { Breadcrumb, BreadcrumbItem, Button, Label, Col, Row } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { Form, Control, Errors } from 'react-redux-form';
+import PropTypes from 'prop-types';
+
+/**
+ * Function for validate for feedback form. Sets the input a s required.
+ * @param {*} value Value of input. 
+ */
+const required = (value) => value &amp;&amp; value.length;
+
+/**
+ * Function for validate for feedback form. Sets the max length of the str.
+ * @param {number} len Max length. 
+ */
+const maxLength = (len) => (value) => !value || value.length &lt;= len;
+
+/**
+ * Function for validate for feedback form. Sets the min length of the str.
+ * @param {number} len Min length. 
+ */
+const minLength = (len) => (value) => value &amp;&amp; value.length >= len;
+
+/**
+ * Function for validate for feedback form. Сhecks if the value is a number.
+ * @param {*} value Value of input. 
+ */
+const isNumber = (value) => !isNaN(Number(value));
+
+/**
+ * Function for validate for feedback form. Сhecks the correctness of the email.
+ * @param {*} value Value of input.
+ */
+const validEmail = (value) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value);
+
+/**
+ * Component for showing contact page.
+ * @param {function} postFeedback Sending feedback to the server.
+ * @param {function} resetFeedbackForm Clear the form when the feedback is sent.
+ */
+class Contact extends Component {
+    constructor(props) {
+        super(props);
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    /**
+     * Function for submitting feedback.
+     * @param {object} values Containing feedback entered by the user in the form.
+     */
+    handleSubmit(values) {
+        this.props.postFeedback(values);
+        this.props.resetFeedbackForm();
+    }
+
+    render() {
+        return (
+            &lt;div className="container">
+                &lt;div className="row">
+                    &lt;Breadcrumb>
+                        &lt;BreadcrumbItem>&lt;Link to='/home'>Home&lt;/Link>&lt;/BreadcrumbItem>
+                        &lt;BreadcrumbItem active>Contact Us&lt;/BreadcrumbItem>
+                    &lt;/Breadcrumb>
+                    &lt;div className="col-12">
+                        &lt;h3>Contacts Us&lt;/h3>
+                        &lt;hr />
+                    &lt;/div>
+                &lt;/div>
+                &lt;div className="row row-content">
+                    &lt;div className="col-12">
+                        &lt;h3>Location Information&lt;/h3>
+                    &lt;/div>
+                    &lt;div className="col-12 col-sm-4 offset-sm-1">
+                        &lt;h5>Our Address&lt;/h5>
+                        &lt;address>
+                            121, Clear Water Bay Road&lt;br />
+                            Clear Water Bay, Kowloon&lt;br />
+                            HONG KONG&lt;br />
+                            &lt;i className="fa fa-phone">&lt;/i>: +852 1234 5678&lt;br />
+                            &lt;i className="fa fa-fax">&lt;/i>: +852 8765 4321&lt;br />
+                            &lt;i className="fa fa-envelope">&lt;/i>: &lt;a href="mailto:confusion@food.net">confusion@food.net&lt;/a>
+                        &lt;/address>
+                    &lt;/div>
+                    &lt;div className="col-12 col-sm-6 offset-sm-1">
+                        &lt;h5>Map of our Location&lt;/h5>
+                    &lt;/div>
+                    &lt;div className="col-12 col-sm-11 offset-sm-1">
+                        &lt;div className="btn-group" role="group">
+                            &lt;a role="button" className="btn btn-primary" href="tel:+85212345678">&lt;i className="fa fa-phone">&lt;/i> Call&lt;/a>
+                            &lt;a role="button" className="btn btn-info" href="# ">&lt;i className="fa fa-skype">&lt;/i> Skype&lt;/a>
+                            &lt;a role="button" className="btn btn-success" href="mailto:confusion@food.net">&lt;i className="fa fa-envelope-o">&lt;/i> Email&lt;/a>
+                        &lt;/div>
+                    &lt;/div>
+                &lt;/div>
+                &lt;div className="row row-content">
+                    &lt;div className="col-12">
+                        &lt;h3>Send us your Feedback&lt;/h3>
+                    &lt;/div>
+                    &lt;div className="col-12 md-9">
+                        &lt;Form model="feedback" onSubmit={(values) => this.handleSubmit(values)}>
+                            &lt;Row className="form-group">
+                                &lt;Label htmlFor="firstname" md={2}>First Name&lt;/Label>
+                                &lt;Col md={10}>
+                                    &lt;Control.text model=".firstname" id="firstname" name="firstname"
+                                        placeholder="First Name"
+                                        className="form-control"
+                                        validators={{
+                                            required, minLength: minLength(3), maxLength: maxLength(15)
+                                        }}
+                                    />
+                                    &lt;Errors
+                                        className="text-danger"
+                                        model=".firstname"
+                                        show="touched"
+                                        messages={{
+                                            required: 'Required ',
+                                            minLength: 'Must be greater than 2 characters ',
+                                            maxLength: 'Must be 15 characters or less'
+                                        }}
+                                    />
+                                &lt;/Col>
+                            &lt;/Row>
+                            &lt;Row className="form-group">
+                                &lt;Label htmlFor="lastname" md={2}>Last Name&lt;/Label>
+                                &lt;Col md={10}>
+                                    &lt;Control.text model=".lastname"
+                                        id="lasttname"
+                                        name="lastname"
+                                        placeholder="Last Name"
+                                        className="form-control"
+                                        validators={{
+                                            required, minLength: minLength(3), maxLength: maxLength(15)
+                                        }}
+                                    />
+                                    &lt;Errors
+                                        className="text-danger"
+                                        model=".lastname"
+                                        show="touched"
+                                        messages={{
+                                            required: 'Required ',
+                                            minLength: 'Must be greater than 2 characters ',
+                                            maxLength: 'Must be 15 characters or less'
+                                        }}
+                                    />
+                                &lt;/Col>
+                            &lt;/Row>
+                            &lt;Row className="form-group">
+                                &lt;Label htmlFor="telnum" md={2}>Contact Tel.&lt;/Label>
+                                &lt;Col md={10}>
+                                    &lt;Control.text model=".telnum"
+                                        id="telnum"
+                                        name="telnum"
+                                        placeholder="Tel. number"
+                                        className="form-control"
+                                        validators={{
+                                            required, minLength: minLength(3), maxLength: maxLength(15), isNumber
+                                        }}
+                                    />
+                                    &lt;Errors
+                                        className="text-danger"
+                                        model=".telnum"
+                                        show="touched"
+                                        messages={{
+                                            required: 'Required ',
+                                            minLength: 'Must be greater than 2 numbers ',
+                                            maxLength: 'Must be 15 numbers or less ',
+                                            isNumber: 'Must be a number'
+                                        }}
+                                    />
+                                &lt;/Col>
+                            &lt;/Row>
+                            &lt;Row className="form-group">
+                                &lt;Label htmlFor="email" md={2}>Email&lt;/Label>
+                                &lt;Col md={10}>
+                                    &lt;Control.text model=".email"
+                                        id="email"
+                                        name="email"
+                                        placeholder="Email"
+                                        className="form-control"
+                                        validators={{
+                                            required, validEmail
+                                        }}
+                                    />
+                                    &lt;Errors
+                                        className="text-danger"
+                                        model=".email"
+                                        show="touched"
+                                        messages={{
+                                            required: 'Required ',
+                                            validEmail: 'Invalid Email Address'
+                                        }}
+                                    />
+                                &lt;/Col>
+                            &lt;/Row>
+                            &lt;Row className="form-group">
+                                &lt;Col md={{ size: 6, offset: 2 }}>
+                                    &lt;div className="form-check">
+                                        &lt;Label check>
+                                            &lt;Control.checkbox model=".agree"
+                                                type="checkbox"
+                                                name="agree"
+                                                className="form-check-input" />
+                                            &lt;strong>May we contact you?&lt;/strong>
+                                        &lt;/Label>
+                                    &lt;/div>
+                                &lt;/Col>
+                                &lt;Col md={{ size: 3, offset: 1 }}>
+                                    &lt;Control.select model=".contactType"
+                                        type="select"
+                                        name="contactType"
+                                        className="form-control">
+                                        &lt;option>Tel.&lt;/option>
+                                        &lt;option>Email&lt;/option>
+                                    &lt;/Control.select>
+                                &lt;/Col>
+                            &lt;/Row>
+                            &lt;Row className="form-group">
+                                &lt;Label htmlFor="message" md={2}>Your Feedback&lt;/Label>
+                                &lt;Col md={10}>
+                                    &lt;Control.textarea model=".message"
+                                        type="textarea"
+                                        id="message"
+                                        name="message"
+                                        rows="7"
+                                        className="form-control" />
+                                &lt;/Col>
+                            &lt;/Row>
+                            &lt;Row className="form-group">
+                                &lt;Col md={{ size: 10, offset: 2 }}>
+                                    &lt;Button type="submit" color="primary">
+                                        Send Feedback
+                                    &lt;/Button>
+                                &lt;/Col>
+                            &lt;/Row>
+                        &lt;/Form>
+                    &lt;/div>
+                &lt;/div>
+            &lt;/div >
+        );
+    }
+}
+
+Contact.propTypes = {
+    postFeedback: PropTypes.func,
+    resetFeedbackForm: PropTypes.func
+}
+
+export default Contact;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutUs.html">AboutUs</a></li><li><a href="module-ContactUs.html">ContactUs</a></li><li><a href="module-DetailsAboutSelecetedDish.html">DetailsAboutSelecetedDish</a></li><li><a href="module-Footer.html">Footer</a></li><li><a href="module-Header.html">Header</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-Loading.html">Loading</a></li><li><a href="module-Main.html">Main</a></li><li><a href="module-Menu.html">Menu</a></li></ul><h3>Classes</h3><ul><li><a href="module-ContactUs-Contact.html">Contact</a></li><li><a href="module-DetailsAboutSelecetedDish-CommentForm.html">CommentForm</a></li><li><a href="module-Header.html">Header</a></li><li><a href="module-Main-Main.html">Main</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Fri Jun 19 2020 15:59:47 GMT+0300 (GMT+03:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

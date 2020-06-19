@@ -1,7 +1,13 @@
+/**
+ * @module Header
+ */
 import React, { Component } from 'react';
 import { Navbar, NavbarBrand, Jumbotron, Nav, Collapse, NavItem, NavbarToggler, Button, Modal, ModalBody, ModalHeader, Form, FormGroup, Input, Label } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 
+/**
+ * Component for rendering header.
+ */
 export default class Header extends Component {
     constructor(props) {
         super(props);
@@ -16,14 +22,23 @@ export default class Header extends Component {
         }
     }
 
+    /**
+     * Function for closing and opening navigation on <md screens.
+     */
     toggleNav() {
         this.setState({ isNavOpen: !this.state.isNavOpen });
     }
 
+    /**
+     * Function for closing and opening login form.
+     */
     toggleModal() {
         this.setState({ isModalOpen: !this.state.isModalOpen });
     }
 
+    /**
+     * Site login function.  
+     */
     handleLogin(e) {
         this.toggleModal();
         alert(`Username: ${this.username.value} Password: ${this.password.value} Remember: ${this.remember.checked}`);

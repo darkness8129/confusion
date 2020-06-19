@@ -1,6 +1,12 @@
+/**
+ * @module Footer
+ */
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+/**
+ * Component for rendering footer.
+ */
 const Footer = () => {
     return (
         <div className="footer">

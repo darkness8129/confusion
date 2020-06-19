@@ -1,3 +1,6 @@
+/**
+ * @module DetailsAboutSelecetedDish
+ */
 import React, { Component } from 'react';
 import { Card, CardBody, CardImg, CardTitle, CardText, Breadcrumb, BreadcrumbItem, Button, Modal, ModalBody, ModalHeader, Label } from 'reactstrap';
 import { Link } from 'react-router-dom';
@@ -7,6 +10,10 @@ import PropTypes from 'prop-types';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 
+/**
+ * Component for rendering dish.
+ * @param {object} dish Containing information about dish.
+ */
 const RenderDish = ({ dish }) => {
     return (
         <FadeTransform in transformProps={{
@@ -28,6 +35,12 @@ RenderDish.propTypes = {
     dish: PropTypes.object
 }
 
+/**
+ * Component for rendering comments.
+ * @param {array} comments Containing array of comments.
+ * @param {function} postComment Posting comment to the server.
+ * @param {number} dishId Id of selected dish.
+ */
 const RenderComments = ({ comments, postComment, dishId }) => {
     return (
         <div>
@@ -59,9 +72,23 @@ RenderComments.propTypes = {
     dishId: PropTypes.number
 }
 
+/**
+ * Function for validate for comment form. Sets the max length of the str.
+ * @param {number} len Max length. 
+ */
 const maxLength = (len) => (value) => !value || value.length <= len;
+
+/**
+ * Function for validate for comment form. Sets the min length of the str.
+ * @param {number} len Min length. 
+ */
 const minLength = (len) => (value) => value && value.length >= len;
 
+/**
+ * Component for showing comments form.
+ * @param {function} postComment Posting comment to the server.
+ * @param {number} dishId Id of selected dish.
+ */
 class CommentForm extends Component {
     constructor(props) {
         super(props);
@@ -74,10 +101,17 @@ class CommentForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    /**
+     * Function thar open and close comment form.
+     */
     toggleCommentForm() {
         this.setState({ isCommentFormOpen: !this.state.isCommentFormOpen })
     }
 
+    /**
+     * Function for submitting comment.
+     * @param {values} values Containing comment entered by the user in the form.
+     */
     handleSubmit(values) {
         this.toggleCommentForm();
         this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
@@ -149,6 +183,14 @@ CommentForm.propTypes = {
     dishId: PropTypes.number
 }
 
+/**
+ * Component for showing details of selected dish.
+ * @param {object} selectedDish Containing information about selected dish.
+ * @param {array} comments Array of comments.
+ * @param {function} postComment Posting comments to the server.
+ * @param {boolean} isLoading Information about loading selected dish.
+ * @param {string} errMessage Containing error message if error occuring.
+ */
 const DishDetail = ({ selectedDish, comments, postComment, isLoading, errMessage }) => {
     if (isLoading) {
         return (

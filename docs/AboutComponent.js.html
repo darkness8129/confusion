@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: AboutComponent.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: AboutComponent.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module AboutUs
+ */
+import React from 'react';
+import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { Stagger, Fade } from 'react-animation-components';
+import PropTypes from 'prop-types';
+import { baseUrl } from '../shared/baseUrl';
+import { Loading } from './LoadingComponent';
+
+/**
+ * Component for rendering list of leaders on about page.
+ * @param {object} leader Containing information about the leader.
+ */
+const RenderLeader = ({ leader }) => {
+    return (
+        &lt;Media tag="li">
+            &lt;Media left middle>
+                &lt;Media object src={baseUrl + leader.image} alt={leader.name} />
+            &lt;/Media>
+            &lt;Media body className="ml-5">
+                &lt;Media heading>{leader.name}&lt;/Media>
+                &lt;p>{leader.designation}&lt;/p>
+                &lt;p>{leader.description}&lt;/p>
+            &lt;/Media>
+        &lt;/Media>
+    );
+}
+
+RenderLeader.propTypes = {
+    leader: PropTypes.object
+}
+
+/**
+ * Component for showing about page.
+ * @param {object} leaders Containing array of leaders and information about errors and loading.
+ */
+const About = ({ leaders }) => {
+    let leadersBlock;
+
+    if (leaders.isLoading) {
+        leadersBlock = &lt;Loading />;
+    } else if (leaders.errMessage) {
+        leadersBlock = &lt;h4>{leaders.errMessage}&lt;/h4>
+    } else {
+        leadersBlock = (&lt;Media list>
+            &lt;Stagger in>
+                {leaders.leaders.map(leader => {
+                    return (
+                        &lt;Fade in key={leader.id}>
+                            &lt;RenderLeader leader={leader} />
+                        &lt;/Fade>
+                    );
+                })}
+            &lt;/Stagger>
+        &lt;/Media>)
+    }
+
+    return (
+        &lt;div className="container">
+            &lt;div className="row">
+                &lt;Breadcrumb>
+                    &lt;BreadcrumbItem>&lt;Link to="/home">Home&lt;/Link>&lt;/BreadcrumbItem>
+                    &lt;BreadcrumbItem active>About Us&lt;/BreadcrumbItem>
+                &lt;/Breadcrumb>
+                &lt;div className="col-12">
+                    &lt;h3>About Us&lt;/h3>
+                    &lt;hr />
+                &lt;/div>
+            &lt;/div>
+            &lt;div className="row row-content">
+                &lt;div className="col-12 col-md-6">
+                    &lt;h2>Our History&lt;/h2>
+                    &lt;p>Started in 2010, Ristorante con Fusion quickly established itself as a culinary icon par excellence in Hong Kong. With its unique brand of world fusion cuisine that can be found nowhere else, it enjoys patronage from the A-list clientele in Hong Kong.  Featuring four of the best three-star Michelin chefs in the world, you never know what will arrive on your plate the next time you visit us.&lt;/p>
+                    &lt;p>The restaurant traces its humble beginnings to &lt;em>The Frying Pan&lt;/em>, a successful chain started by our CEO, Mr. Peter Pan, that featured for the first time the world's best cuisines in a pan.&lt;/p>
+                &lt;/div>
+                &lt;div className="col-12 col-md-5">
+                    &lt;Card>
+                        &lt;CardHeader className="bg-primary text-white">Facts At a Glance&lt;/CardHeader>
+                        &lt;CardBody>
+                            &lt;dl className="row p-1">
+                                &lt;dt className="col-6">Started&lt;/dt>
+                                &lt;dd className="col-6">3 Feb. 2013&lt;/dd>
+                                &lt;dt className="col-6">Major Stake Holder&lt;/dt>
+                                &lt;dd className="col-6">HK Fine Foods Inc.&lt;/dd>
+                                &lt;dt className="col-6">Last Year's Turnover&lt;/dt>
+                                &lt;dd className="col-6">$1,250,375&lt;/dd>
+                                &lt;dt className="col-6">Employees&lt;/dt>
+                                &lt;dd className="col-6">40&lt;/dd>
+                            &lt;/dl>
+                        &lt;/CardBody>
+                    &lt;/Card>
+                &lt;/div>
+                &lt;div className="col-12">
+                    &lt;Card>
+                        &lt;CardBody className="bg-faded">
+                            &lt;blockquote className="blockquote">
+                                &lt;p className="mb-0">You better cut the pizza in four pieces because
+                                    I'm not hungry enough to eat six.&lt;/p>
+                                &lt;footer className="blockquote-footer">Yogi Berra,
+                                &lt;cite title="Source Title">The Wit and Wisdom of Yogi Berra,
+                                    P. Pepe, Diversion Books, 2014&lt;/cite>
+                                &lt;/footer>
+                            &lt;/blockquote>
+                        &lt;/CardBody>
+                    &lt;/Card>
+                &lt;/div>
+            &lt;/div>
+            &lt;div className="row row-content">
+                &lt;div className="col-12">
+                    &lt;h2>Corporate Leadership&lt;/h2>
+                &lt;/div>
+                &lt;div className="col-12">
+                    {leadersBlock}
+                &lt;/div>
+            &lt;/div>
+        &lt;/div>
+    );
+}
+
+About.propTypes = {
+    leaders: PropTypes.object
+}
+
+export default About;    </code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutUs.html">AboutUs</a></li><li><a href="module-ContactUs.html">ContactUs</a></li><li><a href="module-DetailsAboutSelecetedDish.html">DetailsAboutSelecetedDish</a></li><li><a href="module-Footer.html">Footer</a></li><li><a href="module-Header.html">Header</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-Loading.html">Loading</a></li><li><a href="module-Main.html">Main</a></li><li><a href="module-Menu.html">Menu</a></li></ul><h3>Classes</h3><ul><li><a href="module-ContactUs-Contact.html">Contact</a></li><li><a href="module-DetailsAboutSelecetedDish-CommentForm.html">CommentForm</a></li><li><a href="module-Header.html">Header</a></li><li><a href="module-Main-Main.html">Main</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Fri Jun 19 2020 15:59:47 GMT+0300 (GMT+03:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

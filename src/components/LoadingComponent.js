@@ -1,5 +1,11 @@
+/**
+ * @module Loading
+ */
 import React from 'react';
 
+/**
+ * Component for showing loader.
+ */
 export const Loading = () => {
     return (
         <div className="col-12">

@@ -1,3 +1,6 @@
+/**
+ * @module Home
+ */
 import React from 'react';
 import { Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText } from 'reactstrap';
 import { FadeTransform } from 'react-animation-components';
@@ -5,6 +8,12 @@ import PropTypes from 'prop-types';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 
+/**
+ * Component for rendering card.
+ * @param {object} item Containing information that must be renderend in a card.
+ * @param {boolean} isLoading Containing information about loading card.
+ * @param {string} errMessage Containing error message if it occures.
+ */
 const RenderCard = ({ item, isLoading, errMessage }) => {
     if (isLoading) {
         return (
@@ -38,6 +47,18 @@ RenderCard.propTypes = {
     errMesage: PropTypes.string
 }
 
+/**
+ * Component for showing home page.
+ * @param {object} dish Containing information about dish.
+ * @param {boolean} dishesLoading Containing information about loading dishes.
+ * @param {string} dishesFailed Containing error message if it occures.
+ * @param {object} promotion Containing information about promotion.
+ * @param {boolean} promotionsLoading Containing information about loading promotions.
+ * @param {string} promotionsFailed Containing error message if it occures.
+ * @param {object} leader Containing information about leader.
+ * @param {boolean} leadersLoading Containing information about loading leaders.
+ * @param {string} leadersFailed Containing error message if it occures.
+ */
 const Home = ({ dish, dishesLoading, dishesFailed, promotion, promotionsLoading, promotionsFailed, leader, leadersLoading, leadersFailed, }) => {
     return (
         <div className="container">
