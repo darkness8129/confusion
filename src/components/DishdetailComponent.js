@@ -130,7 +130,8 @@ class CommentForm extends Component {
                                 <Control.select model=".rating"
                                     id="rating"
                                     name="rating"
-                                    className="form-control" >
+                                    className="form-control"
+                                    defaultValue="1">
                                     <option>1</option>
                                     <option>2</option>
                                     <option>3</option>

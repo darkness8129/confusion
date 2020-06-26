@@ -89,7 +89,7 @@ class Main extends Component {
                     postComment={this.props.postComment} />
             );
         }
-
+        //in last route children, because it fixes animation
         return (
             <>
                 <Header />
@@ -100,7 +100,7 @@ class Main extends Component {
                             <Route path='/aboutus' component={() => <About leaders={this.props.leaders} />} />
                             <Route exact path='/menu' component={() => <Menu dishes={this.props.dishes} />} />
                             <Route path='/menu/:dishId' component={DishWithId} />
-                            <Route path='/contactus' component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} postFeedback={this.props.postFeedback} />} />
+                            <Route path='/contactus' children={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} postFeedback={this.props.postFeedback} />} />
                             <Redirect to='/home' />
                         </Switch>
                     </CSSTransition>
