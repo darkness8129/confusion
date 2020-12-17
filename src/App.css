@@ -3,14 +3,9 @@
     padding: 0px auto;
 }
 
-.footer {
-    background-color: #D1C4E9;
-    padding: 20px 0px 20px 0px;
-}
-
 .jumbotron {
     padding: 70px 30px 70px 30px;
-    background: #9575CD;
+    background: #9575cd;
     color: floralwhite;
 }
 
@@ -21,7 +16,7 @@
 }
 
 .navbar-dark {
-    background-color: #512DA8;
+    background-color: #512da8;
 }
 
 .page-enter {
@@ -56,4 +51,200 @@
 
 .footer {
     margin-top: auto;
+    background-color: #512da8;
+    color: gainsboro;
+    padding-bottom: 0;
+    padding: 10px 0px 0px 0px;
+    font-style: italic;
+}
+
+.card-subtitle {
+    margin-top: 0;
+}
+.jumbotron {
+    margin-bottom: 0px;
+}
+
+.App > div:nth-child(3) {
+    margin: 20px 0 20px 0;
+}
+
+.nav-link {
+    margin: 0 10px;
+}
+
+.nav-link > span {
+    margin-right: 5px;
+}
+
+.login {
+    margin-left: 50px;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.login:hover {
+    opacity: 1;
+}
+
+.login > span {
+    margin-right: 10px;
+}
+
+.intro {
+    color: white;
+    background-image: url(./assets/images/intro.png);
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+    color: gainsboro;
+    display: flex;
+    align-items: center;
+    margin-top: 66px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.intro h1 {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 50px;
+    color: white;
+}
+
+.card-title {
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+}
+.card-subtitle {
+    font-style: italic;
+}
+
+.navbar-brand > img {
+    width: 40px;
+    height: 40px;
+}
+
+.navbar {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 0 5px;
+}
+
+.social-block {
+    display: flex;
+    margin: 10px 0;
+}
+.media {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.media img {
+    max-width: 230px;
+    width: 100%;
+    border-radius: 50%;
+}
+.media-list {
+    padding: 0;
+}
+
+.media-body > p:first-of-type {
+    font-style: italic;
+}
+
+.facts {
+    background-color: #512da8 !important;
+}
+
+.card-img-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-title-menu {
+    font-size: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    opacity: 0;
+    transition: 0.3s linear opacity;
+}
+
+.menu-card {
+    border-radius: 0.25rem;
+    background-color: #512da8;
+}
+
+.menu-card img {
+    transition: 0.3s linear opacity;
+}
+
+.menu-card:hover img {
+    opacity: 0.1;
+}
+
+.menu-card:hover .card-title-menu {
+    opacity: 1;
+}
+
+.page-title {
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 40px;
+    margin: 15px 0;
+}
+
+.page-subtitle {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+address {
+    display: flex;
+    justify-content: space-between;
+}
+
+address a {
+    color: gainsboro;
+}
+
+.contact-form label {
+    padding-left: 0;
+    padding-right: 0;
+    display: block;
+    width: 100%;
+    max-width: 100px;
+    white-space: nowrap;
+}
+.form-group.row {
+    display: flex;
+    justify-content: center;
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.loader p {
+    margin: 10px 0;
 }
